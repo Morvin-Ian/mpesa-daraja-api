@@ -38,7 +38,7 @@ def mpesa():
         "Timestamp":format_time(),    
         "TransactionType": "CustomerPayBillOnline",    
         "Amount":"1",    
-        "PartyA":"254726486929",    
+        "PartyA":"2547xxxxxxx",    
         "PartyB":credentials.bs_shortcode,    
         "PhoneNumber":"2547xxxxxxxx",    
         "CallBackURL":"https://essaybees.com/home",    
