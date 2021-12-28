@@ -34,4 +34,4 @@ Below is a response to a successfull request.
 2. datetime module  
 3. base64 module  
 
-This Api has been applied in [My website](https://www.rulibrary.herokuapp.com)
+This Api has been applied in this [library website](https://rulibrary.herokuapp.com)
