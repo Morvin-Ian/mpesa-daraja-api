@@ -22,7 +22,7 @@ def decode_password():
 def generate_access_token():
     response = requests.request("GET", credentials.acess_token_url, auth=HTTPBasicAuth(credentials.consumer_key,credentials.consumer_secrete))    
     res_json = response.json()
-    #Filtering out the expiry date that is returned together with the access as a response 
+    #Filtering out the expiry date that is returned together with the access token as a response 
     filtered_access_token = res_json['access_token'] 
     return filtered_access_token
     
