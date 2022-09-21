@@ -5,9 +5,8 @@ Integrating the Daraja-Api with Python language.
 This file contains the consumer key and the consumer secrete key that is provided by Safaricom for test purposes.
 [Safaricom developers site](https://developer.safaricom.co.ke/)
 
-## mpesa.py file
-The main file that contains various functions with different tasks
-according to the Daraja api requirements.
+## Mpesa Express
+It initiates payment on behalf of the customer
 
 ### format_time()
 The datetime module in python returns a date in %Y-%m-%d %H%M%S format.
@@ -28,6 +27,13 @@ This function makes a GET request through the api_url and in relation to our req
 Below is a response to a successfull request.
 
 ![Screenshot at 2021-10-25 21-26-04](https://user-images.githubusercontent.com/78966128/138972862-2ac78448-de8c-463a-86b8-de4c321feece.png)
+
+## Mpesa Customer to Busineess
+Register validation and confirmation URLs on M-Pesa
+
+
+## Mpesa Business to Customer
+Transact between an M-Pesa short code to a phone number registered on M-Pesa
 
 ## Requirements
 1. requests module  
