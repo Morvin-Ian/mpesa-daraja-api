@@ -1,71 +1,38 @@
-# Customer to Business
-# Register validation and confirmation URLs on M-Pesa
-
-import requests
-import mpesa_express
-import credentials
+#Confirmation and validaion url must be registered first
 import json
+import requests
+import credentials
+from mpesa_express import generate_access_token
+
 
 
 def register_url():
-    access_token = mpesa_express.generate_access_token()
+    access_token = generate_access_token()
     data = {
         
-        'ShortCode' : 'LNM_SHORTCODE',
+        'ShortCode' : credentials.registration_shortcode,
         'ResponseType' : 'Completed',
-        'ConfirmationURL' : 'https://example.com/callback-c2b',
-        'ValidationURL' : 'https://example.com/callback-c2b',
+        'ConfirmationURL' : 'https://fullstackdjango.com/confirmation',
+        'ValidationURL' : 'https://fullstackdjango.com/validation',
     }
 
-    url = 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl'
-    headers = {"Authorization": "Bearer %s" % access_token}
-    response = submission(url, data)
-    return response
-
-def submission(url, json_body):
-    access_token = mpesa_express.generate_access_token()
-    headers = {"Authorization": "Bearer %s" % access_token}
-    if(access_token != '' or access_token != False):
-        response = requests.post(url, json=json_body, headers=headers)
-        return response
-    else:
-        print("Invalid access token")
+    url = credentials.registration_url
+    header = {"Authorization": "Bearer %s" %access_token, 'Content-Type': "application/json" }
+    response = requests.post(url, json=data, headers=header)
+    return response.text
 
 
-def simulate_c2b(amount = 10, msisdn = 254726486929, ref = 'Testing'):
-
+def simulate_c2b():
+    access_token = generate_access_token()
     data = {
-        'ShortCode' : credentials.bs_shortcode,
+        'ShortCode' : credentials.registration_shortcode,
         'CommandID' : 'CustomerPayBillOnline',
-        'Amount' : amount,
-        'Msisdn' : msisdn,
-        'BillRefNumber' : ref, # account number
+        'Amount' : "1",
+        'Msisdn' : 254726486929,
+        'BillRefNumber' : "ref", # account number
     }
-    data = json.loads(data)
+
+    header = {"Authorization": "Bearer %s" %access_token, 'Content-Type': "application/json" }
     url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate'
-    response = submission(url, data)
-    return response
-
-
-def initiate_stk(amount = 10, msisdn = 254726486929, ref = 'account'):
- 
-    api_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
-
-    request = {    
-        "BusinessShortCode":credentials.bs_shortcode,    
-        "Password": mpesa_express.decode_password(),    
-        "Timestamp":mpesa_express.format_time(),    
-        "TransactionType": "CustomerPayBillOnline",    
-        "Amount":amount,    
-        "PartyA":msisdn,    
-        "PartyB":credentials.bs_shortcode,    
-        "PhoneNumber":msisdn,    
-        "CallBackURL":"https://essaybees.com/home",    
-        "AccountReference":ref,    
-        "TransactionDesc":"Pay library penalties"
-    }
-
-    response = submission(api_url,request) #The response can either be a succesful transaction or a failed transaction 
-    return response
-
-simulate_c2b()
+    response = requests.post(url, json=data, headers=header)
+    return response.text
